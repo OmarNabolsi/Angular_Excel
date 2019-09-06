@@ -7,4 +7,13 @@
     </td>
   </tr>
 </table>
+<button (click)="readToConsole()">Read</button>
+<br>
+<form>
+  <select [(ngModel)]="selectedHeader" name="header"(change)="onSelectHeader(selectedHeader)">
+    <option *ngFor="let h of headers; let i = index" [value]="i" (change)="onSelectHeader(i)">{{ h }}</option>
+  </select>
+</form>
+
+<hr>
 <button (click)="export()">Export</button>

@@ -13,6 +13,8 @@ export class AppComponent {
   data: AOA = [ [1, 2], [3, 4] ];
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
   fileName = 'SheetJS.xlsx';
+  headers = [];
+  selectedHeader = '';
 
   onFileChange(evt: any) {
     const target: DataTransfer = (evt.target) as DataTransfer;
@@ -32,10 +34,24 @@ export class AppComponent {
     reader.readAsBinaryString(target.files[0]);
   }
 
+  readToConsole() {
+    this.data[0].forEach((val, i) => {
+      this.headers.push(val);
+    });
+    console.log(this.data[0]);
+    console.log(this.headers);
+  }
+
   export(): void {
     const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     XLSX.writeFile(wb, this.fileName);
+  }
+
+  onSelectHeader(i: any) {
+    this.data.forEach(row => {
+      console.log(row[i]);
+    });
   }
 }
